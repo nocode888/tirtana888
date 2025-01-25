@@ -7,10 +7,8 @@ function Login() {
 
   const handleFacebookLogin = async () => {
     try {
-      // Create new instance of MetaApiService (no need to pass token anymore)
       const metaApi = new MetaApiService();
       
-      // Test API connection
       try {
         const testAudience = await metaApi.searchAudiences('test', {
           gender: 'all',
@@ -19,20 +17,21 @@ function Login() {
           objective: 'AWARENESS'
         });
         
-        console.log('API Connection successful:', testAudience);
+        console.log('API Response:', testAudience);
         
-        // Store success state in localStorage
-        localStorage.setItem('isAuthenticated', 'true');
-        
-        // Redirect to dashboard
-        navigate('/dashboard');
+        if (Array.isArray(testAudience) && testAudience.length > 0) {
+          localStorage.setItem('isAuthenticated', 'true');
+          navigate('/dashboard');
+        } else {
+          throw new Error('No data received from API');
+        }
       } catch (error) {
-        console.error('API Test Error:', error);
-        alert('Failed to connect to Meta API. Please try again.');
+        console.error('API Error Details:', error);
+        alert(error.message || 'Failed to connect to Meta API. Please try again.');
       }
     } catch (error) {
       console.error('Login Error:', error);
-      alert('Login failed. Please try again.');
+      alert('Login failed. Please check console for details.');
     }
   };
 

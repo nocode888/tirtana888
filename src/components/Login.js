@@ -1,29 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MetaApiService } from '../services/metaApi';
+import { MetaApiService } from '../services/metaApi.ts';
 
 function Login() {
   const navigate = useNavigate();
-  const META_TOKEN = 'EAAWrZB71ZBz5kBO9ZBgEZCvGmTqfsYEjBRsR4g2oVZBYChMxoZChav0VRBBfL7V3t8tZA1kIGfLVI4AFHWhdFOvkkdlQomWiQ7hcRsNMwuUMoPkyTFUaf7LsmiDfeduZBf5EChoW3b2yaZCOx5WMmZCp8ZA9TqfAjpfcHgjH7cNEicNO7iAEn62pxFK72aUTTOG9wLYQuZBKvAa4Rg5Mr2tN';
-
-  useEffect(() => {
-    window.fbAsyncInit = function() {
-      window.FB.init({
-        appId: '1906862729697329', // App ID dari Meta API
-        cookie: true,
-        xfbml: true,
-        version: 'v18.0'
-      });
-    };
-  }, []);
 
   const handleFacebookLogin = async () => {
     try {
-      // Langsung gunakan token yang sudah ada
-      localStorage.setItem('meta_access_token', META_TOKEN);
-      
-      // Initialize Meta API
-      const metaApi = new MetaApiService(META_TOKEN);
+      // Create new instance of MetaApiService (no need to pass token anymore)
+      const metaApi = new MetaApiService();
       
       // Test API connection
       try {
@@ -35,13 +20,19 @@ function Login() {
         });
         
         console.log('API Connection successful:', testAudience);
-        // Redirect ke dashboard jika API berhasil
+        
+        // Store success state in localStorage
+        localStorage.setItem('isAuthenticated', 'true');
+        
+        // Redirect to dashboard
         navigate('/dashboard');
       } catch (error) {
         console.error('API Test Error:', error);
+        alert('Failed to connect to Meta API. Please try again.');
       }
     } catch (error) {
       console.error('Login Error:', error);
+      alert('Login failed. Please try again.');
     }
   };
 

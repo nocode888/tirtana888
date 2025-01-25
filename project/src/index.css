@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-gradient-to-br from-gray-50 to-gray-100;
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors;
+}
+
+/* Glass morphism */
+.glass-morphism {
+  @apply bg-white/80 backdrop-blur-sm backdrop-filter border border-white/20;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-br from-blue-600 to-indigo-600;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white;
+}
+
+/* Button styles */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus-ring;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-br from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700;
+}
+
+.btn-secondary {
+  @apply bg-white border border-gray-200 text-gray-700 hover:bg-gray-50;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white/80 rounded-2xl border border-gray-200/50 shadow-sm backdrop-blur-sm;
+}
+
+/* Input styles */
+.input {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Chat message animations */
+.message-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1024px) {
+  .chat-section {
+    @apply fixed bottom-0 left-0 right-0 z-50 bg-white shadow-lg;
+    height: 60vh;
+  }
+
+  .chat-section.open {
+    transform: translateY(0);
+  }
+}
+
+/* Chat container styles */
+.chat-container {
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.chat-input {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  border-top: 1px solid theme('colors.gray.200');
+  padding: 1rem;
+}
